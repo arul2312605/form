@@ -1,43 +1,62 @@
 function validateForm() {
-    const name = document.getElementById("name").value;
-    const mobile = document.getElementById("mobile").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+  const name = document.getElementById("name").value;
+  const addr = document.getElementById("address").value;
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+  const agree = document.getElementById("agree").checked;
 
-    //  name
-    if (name.trim() === "") {
-      alert("Name is required.");
-      return false;
-    }
+  const nameErr = document.getElementById("name-error");
+  const addrErr = document.getElementById("address-error");
+  const emailErr = document.getElementById("email-error");
+  const passErr = document.getElementById("password-error");
+  const agreeErr = document.getElementById("agree-error");
 
-    //  mobile number
-    
-    if (!mobilePattern.test(mobile)) {
-      alert("Please enter a valid 10-digit mobile number starting with 6-9.");
-      return false;
-    }
+  nameErr.textContent = "";
+  addrErr.textContent = "";
+  emailErr.textContent = "";
+  passErr.textContent = "";
+  agreeErr.textContent = "";
 
-    //  email
-    
-    if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
-      return false;
-    }
+  let isValid = true;
 
-    //  password
-    if (password.length < 3) {
-      alert("Password must be at least 3 characters long.");
-      return false;
-    }
-
-    //  confirm password
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return false;
-    }
-    
-
-    alert("Form submitted successfully!");
-    return true;
+  if (name === "" || /\d/.test(name)) {
+      nameErr.textContent = "Please enter your name properly.";
+      isValid = false;
   }
+
+  if (addr === "") {
+      addrErr.textContent = "Please enter your address.";
+      isValid = false;
+  }
+
+  if (email === "" || !email.includes("@") || !email.includes(".")) {
+      emailErr.textContent = "Please enter a valid email address.";
+      isValid = false;
+  }
+
+  if (pass === "" || pass.length < 6) {
+      passErr.textContent = "Please enter a password with at least 6 characters.";
+      isValid = false;
+  }
+
+  if (!agree) {
+      agreeErr.textContent = "Please agree to the above information.";
+      isValid = false;
+  }
+
+  if (isValid) {
+      alert("Form submitted successfully!");
+      return true;
+  }
+  else {
+      return false;
+  }
+}
+
+function resetErrors() {
+  document.getElementById("name-error").textContent = "";
+  document.getElementById("address-error").textContent = "";
+  document.getElementById("email-error").textContent = "";
+  document.getElementById("password-error").textContent = "";
+  document.getElementById("agree-error").textContent = "";
+}
